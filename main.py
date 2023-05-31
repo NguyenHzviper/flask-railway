@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from sklearn.preprocessing import StandardScaler
 import joblib
 from flask_cors import CORS
 
