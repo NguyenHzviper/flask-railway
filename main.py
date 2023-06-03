@@ -6,26 +6,18 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load the Random Forest model
-model = joblib.load('RF_chuate.pkl')
+model = joblib.load('NB.pkl')
 # Define the mapping for field names
 mapping = {
-    'Gender': 'gender',
-    'age': 'age',
-    'education': 'education',
-    'currentSmoker': 'currentSmoker',
-    'cigsPerDay': 'cigsPerDay',
-    'BPMeds': 'BPMeds',
-    'prevalentStroke': 'prevalentStroke',
-    'prevalentHyp': 'prevalentHyp',
-    'diabetes': 'diabetes',
-    'totChol': 'totChol',
-    'sysBP': 'sysBP',
-    'diaBP': 'diaBP',
-    'BMI': 'BMI',
-    'heartRate': 'heartRate',
-    'glucose': 'glucose',
+'age': 'age',
+'sysBP': 'sysBP',
+'prevalentHyp': 'prevalentHyp',
+'diaBP': 'diaBP',
+'diabetes': 'diabetes',
+'Gender': 'gender',
+'BPMeds': 'BPMeds',
+'BMI': 'BMI'
 }
-
 # Define a route to handle prediction requests
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -33,8 +25,9 @@ def predict():
     
     input_data = [data[mapping[field]] for field in mapping]
     print(input_data)
+    # Convert input data to numeric values
+    input_data = [float(value) if isinstance(value, str) else value for value in input_data]
 
-   
     predictions = model.predict([input_data])
    
     return jsonify({'predictions': predictions.tolist()})
