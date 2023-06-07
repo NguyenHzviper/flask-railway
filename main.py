@@ -9,15 +9,15 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 model = joblib.load('NB.pkl')
 # Define the mapping for field names
 mapping = {
-'age': 'age',
-'sysBP': 'sysBP',
-'prevalentHyp': 'prevalentHyp',
-'diaBP': 'diaBP',
-'diabetes': 'diabetes',
 'Gender': 'gender',
+'cigsPerDay': 'cigsPerDay',
 'BPMeds': 'BPMeds',
-'BMI': 'BMI'
+'prevalentStroke': 'prevalentStroke',
+'prevalentHyp': 'prevalentHyp',
+'diabetes': 'diabetes',
+'glucose': 'glucose'
 }
+
 # Define a route to handle prediction requests
 @app.route('/predict', methods=['POST'])
 def predict():
